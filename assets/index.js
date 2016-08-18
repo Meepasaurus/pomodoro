@@ -1,15 +1,13 @@
 'use strict';
 
-var Timer = function(defaultWorkSeconds, defaultBreakSeconds, sliceDOM, counterDOM){
+var Timer = function(defaultSessionSeconds, defaultBreakSeconds, sliceDOM, counterDOM){
 	var slice = sliceDOM,
 		counter = counterDOM,
-		timerType = 'work',
-		totalWorkSeconds = defaultWorkSeconds,
+		timerType = 'session',
+		totalSessionSeconds = defaultSessionSeconds,
 		totalBreakSeconds = defaultBreakSeconds,
 		sectionTotalSeconds = 0,
 		sectionRemainingSeconds = 0,
-		//remainingWorkSeconds = totalWorkSeconds,
-		//remainingBreakSeconds = totalBreakSeconds,
 		interval = '',
 		isActive = false;
 
@@ -33,6 +31,15 @@ var Timer = function(defaultWorkSeconds, defaultBreakSeconds, sliceDOM, counterD
 		updateClock: function(){
 			//remainingSeconds/totalSeconds = x/360 degrees
 			var degrees = (sectionRemainingSeconds/sectionTotalSeconds) * 360;
+
+			//change title at start of section
+			if (degrees === 360){
+				if (timerType === 'session'){
+					$('#title').text('Session');
+				} else {
+					$('#title').text('Break');
+				}
+			}
 
 			//linear gradient method adapted from SO - Sampson
 			if (degrees <= 180){
@@ -58,10 +65,17 @@ var Timer = function(defaultWorkSeconds, defaultBreakSeconds, sliceDOM, counterD
 			if (sectionRemainingSeconds === 0){
 				this.startStop();
 				console.log(timerType + ' time\'s up.');
-				if (timerType === 'work'){
+				if (timerType === 'session'){
+					document.getElementById("notification").play();
 					timerType = 'break';
 					sectionRemainingSeconds = totalBreakSeconds;
 					sectionTotalSeconds = totalBreakSeconds;
+					this.startStop();
+				} else {
+					document.getElementById("notification").play();
+					timerType = 'session';
+					sectionRemainingSeconds = totalSessionSeconds;
+					sectionTotalSeconds = totalSessionSeconds;
 					this.startStop();
 				}
 			} else {
@@ -84,14 +98,14 @@ var Timer = function(defaultWorkSeconds, defaultBreakSeconds, sliceDOM, counterD
 
 		setSeconds: function(newSeconds){
 			if (newSeconds){
-				totalWorkSeconds += 2;
+				totalSessionSeconds += 2;
 			}
 			this.updateClock();
 		},
 
 		init: function(){
-			sectionRemainingSeconds = totalWorkSeconds;
-			sectionTotalSeconds = totalWorkSeconds;
+			sectionRemainingSeconds = totalSessionSeconds;
+			sectionTotalSeconds = totalSessionSeconds;
 			this.updateClock();
 		}
 	};

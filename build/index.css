@@ -2,29 +2,56 @@
   box-sizing: border-box; }
 
 body {
+  margin: 0;
+  padding: 30px;
   font-family: 'Roboto', sans-serif;
-  background-color: #333; }
+  background-color: darkgreen; }
 
 a {
   text-decoration: none; }
 
+.wrapper {
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto; }
+
+.title {
+  text-align: center; }
+  .title h2 {
+    margin: 0 0 30px 0;
+    padding: 0;
+    font-size: 60px;
+    color: white; }
+
+.clock-container {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  max-height: 500px;
+  margin: 0 auto; }
+
+.one-by-one-aspect-ratio {
+  padding-bottom: 100%; }
+
 .circle-background {
-  width: 200px;
-  height: 200px;
-  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   border-radius: 50%;
-  background-color: white;
-  border: 2px solid green; }
+  background-color: white; }
 
 .clock-face {
-  position: relative;
+  position: absolute;
   z-index: 2;
   top: 5%;
+  left: 5%;
   width: 90%;
   height: 90%;
   margin: 0 auto;
   border-radius: 50%;
-  background-color: green; }
+  background-color: darkgreen; }
 
 .counter {
   display: flex;
@@ -37,7 +64,7 @@ a {
     margin: 0;
     padding: 0;
     text-align: center;
-    font-size: 40px;
+    font-size: 120px;
     color: white; }
 
 .btn-clock {
@@ -58,3 +85,17 @@ a {
     width: 100%;
     text-align: center;
     font-size: 30px; }
+
+@media screen and (max-width: 510px) {
+  .counter p {
+    font-size: 100px; } }
+
+@media screen and (max-width: 400px) {
+  .counter p {
+    font-size: 80px; }
+  .title h2 {
+    font-size: 50px; } }
+
+@media screen and (max-width: 330px) {
+  .counter p {
+    font-size: 60px; } }
