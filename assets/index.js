@@ -1,9 +1,15 @@
 'use strict';
 
-var Timer = function(defaultSeconds,sliceDOM, counterDOM){
+var Timer = function(defaultWorkSeconds, defaultBreakSeconds, sliceDOM, counterDOM){
 	var slice = sliceDOM,
 		counter = counterDOM,
-		seconds = defaultSeconds,
+		timerType = 'work',
+		totalWorkSeconds = defaultWorkSeconds,
+		totalBreakSeconds = defaultBreakSeconds,
+		sectionTotalSeconds = 0,
+		sectionRemainingSeconds = 0,
+		//remainingWorkSeconds = totalWorkSeconds,
+		//remainingBreakSeconds = totalBreakSeconds,
 		interval = '',
 		isActive = false;
 
@@ -11,8 +17,8 @@ var Timer = function(defaultSeconds,sliceDOM, counterDOM){
 		updateCounter: function(){
 			var secPrefix = '',
           		minPrefix = '',
-          		minutesToRefresh = Math.floor(seconds/60),
-	      		secondsToRefresh = seconds % 60;
+          		minutesToRefresh = Math.floor(sectionRemainingSeconds/60),
+	      		secondsToRefresh = sectionRemainingSeconds % 60;
 	      
 	      	if (secondsToRefresh < 10){
 	        	secPrefix = '0';
@@ -25,20 +31,20 @@ var Timer = function(defaultSeconds,sliceDOM, counterDOM){
 		},
 
 		updateClock: function(){
-			//1/60 seconds = 6/360 degrees
-			var partialSeconds = seconds % 60; //seconds remaining in the :00 part of the timer
-			var degrees = 6 * partialSeconds + 90;
+			//remainingSeconds/totalSeconds = x/360 degrees
+			var degrees = (sectionRemainingSeconds/sectionTotalSeconds) * 360;
 
 			//linear gradient method adapted from SO - Sampson
-			if (partialSeconds <= 30){
+			if (degrees <= 180){
 				//0-50% (90-270deg)
+				degrees += 90;
 				slice.css({
 					'background-image' :
         				'linear-gradient(' + degrees +
         				'deg, transparent 50%, green 50%),linear-gradient(90deg, green 50%, transparent 50%)'
 				});
 			} else {
-				degrees -= 180;
+				degrees -= 90;
 				//90-270 for 50-100%
 				slice.css({
 					'background-image' :
@@ -49,12 +55,18 @@ var Timer = function(defaultSeconds,sliceDOM, counterDOM){
 			//update counter
 			this.updateCounter();
 			
-			if (seconds === 0){
+			if (sectionRemainingSeconds === 0){
 				this.startStop();
-				console.log('Time\'s up.');
+				console.log(timerType + ' time\'s up.');
+				if (timerType === 'work'){
+					timerType = 'break';
+					sectionRemainingSeconds = totalBreakSeconds;
+					sectionTotalSeconds = totalBreakSeconds;
+					this.startStop();
+				}
 			} else {
-				seconds--;
-				console.log(seconds+1 + ' seconds remaining.');
+				sectionRemainingSeconds--;
+				console.log(sectionRemainingSeconds+1 + ' seconds remaining.');
 			}
 		},
 
@@ -72,19 +84,21 @@ var Timer = function(defaultSeconds,sliceDOM, counterDOM){
 
 		setSeconds: function(newSeconds){
 			if (newSeconds){
-				seconds += 2;
+				totalWorkSeconds += 2;
 			}
 			this.updateClock();
 		},
 
 		init: function(){
+			sectionRemainingSeconds = totalWorkSeconds;
+			sectionTotalSeconds = totalWorkSeconds;
 			this.updateClock();
 		}
 	};
 };
 
 $(document).ready(function(){
-	var myTimer = new Timer(125, $('#slice'), $('.counter').find('p'));
+	var myTimer = new Timer(3, 5, $('#slice'), $('.counter').find('p'));
 	myTimer.init();
 
 	$('.btn-clock').on('click', function(e){
@@ -94,11 +108,11 @@ $(document).ready(function(){
 
 	$('#plus').on('click', function(e){
 		e.preventDefault();
-		myTimer.setSeconds(true);
+		//myTimer.setSeconds(true);
 	});
 
 	$('#minus').on('click', function(e){
 		e.preventDefault();
-		myTimer.setSeconds(false);
+		//myTimer.setSeconds(false);
 	});
 });
