@@ -1,8 +1,12 @@
 'use strict';
 
-var Timer = function(defaultSessionSeconds, defaultBreakSeconds, sliceDOM, counterDOM){
-	var slice = sliceDOM,
-		counter = counterDOM,
+var Timer = function(defaultSessionSeconds, defaultBreakSeconds){
+	var sliceDOM = $('#slice'),
+		counterDOM = $('.counter').find('p'),
+		titleDOM = $('#title'),
+		pulseDOM = $('#pulse'),
+		txtColor = 'white',
+		bgColor = '#263238',
 		timerType = 'session',
 		totalSessionSeconds = defaultSessionSeconds,
 		totalBreakSeconds = defaultBreakSeconds,
@@ -25,7 +29,7 @@ var Timer = function(defaultSessionSeconds, defaultBreakSeconds, sliceDOM, count
 	        	minPrefix = '0';
 	      	}
 	      
-	      	counter.text(minPrefix + minutesToRefresh + ':' + secPrefix + secondsToRefresh);
+	      	counterDOM.text(minPrefix + minutesToRefresh + ':' + secPrefix + secondsToRefresh);
 		},
 
 		updateClock: function(){
@@ -35,36 +39,54 @@ var Timer = function(defaultSessionSeconds, defaultBreakSeconds, sliceDOM, count
 			//change title at start of section
 			if (degrees === 360){
 				if (timerType === 'session'){
-					$('#title').text('Session');
+					titleDOM.text('Session');
 				} else {
-					$('#title').text('Break');
+					titleDOM.text('Break');
 				}
 			}
 
 			//linear gradient method adapted from SO - Sampson
-			if (degrees <= 180){
-				//0-50% (90-270deg)
+			if (degrees === 0){
+				sliceDOM.css({
+					'background-color' : '#263238'
+				});
+			} else if (degrees <= 180){
+				//(0-50%] - (90-270deg]
 				degrees += 90;
-				slice.css({
+				sliceDOM.css({
+					'background-color' : txtColor,
 					'background-image' :
         				'linear-gradient(' + degrees +
-        				'deg, transparent 50%, green 50%),linear-gradient(90deg, green 50%, transparent 50%)'
+        				'deg, transparent 50%, ' + bgColor + ' 50%),linear-gradient(90deg, ' + bgColor + ' 50%, transparent 50%)'
+				});
+			} else if (degrees < 360) {
+				degrees -= 90;
+				//[50-100%) - [90-270deg)
+				sliceDOM.css({
+					'background-color' : txtColor,
+					'background-image' :
+        				'linear-gradient(' + degrees +
+        				'deg, transparent 50%, white 50%),linear-gradient(90deg, '+ bgColor + ' 50%, transparent 50%)'
 				});
 			} else {
-				degrees -= 90;
-				//90-270 for 50-100%
-				slice.css({
-					'background-image' :
-        				'linear-gradient(' + degrees +
-        				'deg, transparent 50%, white 50%),linear-gradient(90deg, green 50%, transparent 50%)'
-				});
-			}
+				//100%
+				sliceDOM.css({
+					'background-image' : 'none',
+					'background-color' : txtColor
+				});	
+			} 
 			//update counter
 			this.updateCounter();
 			
 			if (sectionRemainingSeconds === 0){
 				this.startStop();
 				console.log(timerType + ' time\'s up.');
+				//animation
+				pulseDOM.addClass('pulse');
+				window.setTimeout(function(){
+					$('#pulse').removeClass('pulse');
+				}, 1000);
+
 				if (timerType === 'session'){
 					document.getElementById("notification").play();
 					timerType = 'break';
@@ -112,7 +134,7 @@ var Timer = function(defaultSessionSeconds, defaultBreakSeconds, sliceDOM, count
 };
 
 $(document).ready(function(){
-	var myTimer = new Timer(3, 5, $('#slice'), $('.counter').find('p'));
+	var myTimer = new Timer(3, 5);
 	myTimer.init();
 
 	$('.btn-clock').on('click', function(e){

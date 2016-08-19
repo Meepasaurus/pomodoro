@@ -1,3 +1,5 @@
+$grayblue: #37474f;
+
 * {
 	box-sizing: border-box;
 }
@@ -6,7 +8,7 @@ body {
 	margin: 0;
 	padding: 30px;
 	font-family: 'Roboto', sans-serif;
-	background-color: darkgreen;
+	background-color: $grayblue;
 }
 
 a {
@@ -61,7 +63,7 @@ a {
 	height: 90%;
 	margin: 0 auto;
 	border-radius: 50%;
-	background-color: darkgreen;
+	background-color: $grayblue;
 }
 
 .counter {
@@ -104,6 +106,26 @@ a {
 	}
 }
 
+.pulse-container {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	border-radius: 50%;
+	background-color: white;
+	opacity: 0;
+}
+
+.pulse {
+	animation: pulse 1s ease-out forwards;
+}
+
+@keyframes pulse {      
+    0% {transform: scale(1); opacity: 0.2;}
+    50% {transform: scale(1); opacity: 0;}
+    100% {transform: scale(1); opacity: 0;}
+}
+
 @media screen and (max-width: 510px){
 	.counter p {
 		font-size: 100px;
@@ -122,5 +144,11 @@ a {
 @media screen and (max-width: 330px){
 	.counter p {
 		font-size: 60px;
+	}
+}
+
+@media screen and (max-width: 250px){
+	.counter p {
+		font-size: 50px;
 	}
 }
