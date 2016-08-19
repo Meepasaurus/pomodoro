@@ -29,6 +29,7 @@ a {
 		padding: 0;
 		font-size: 60px;
 		color: white;
+		cursor: default;
 	}
 }
 
@@ -88,21 +89,93 @@ a {
 	border-radius: 50%;
 }
 
+.settings {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	margin-top: 10px;
+}
+
+.timer-settings {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	flex: 1 1 260px;
+	padding: 0 20px;
+}
+
+.timer-row {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	cursor: default;
+
+	p {
+		margin: 0;
+		padding: 5px;
+		color: white;
+		font-size: 30px;
+	}
+
+	i {
+		font-size: 20px;
+	}
+}
+
+.timer-row:first-of-type {
+	margin-top: 20px;
+}
+
 .btn {
 	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	height: 30px;
+	max-width: 30px;
+	width: 100%;
+	margin: 2px;
+	padding: 0;
+	text-align: center;
+
+	p{
+		margin: 0;
+		padding: 0;
+		text-align: center;
+		font-size: 30px;
+		color: #aaa;
+		transition: 0.2s ease-in-out color;
+
+		&:hover, &:active, &:focus {
+			color: white;
+		}
+	}
+}
+
+.timer-digit {
+	display: flex;
 	align-items: center;
-	margin: 10px;
-	height: 50px;
-	width: 50px;
-	border-radius: 50%;
-	color: white;
-	background-color: blue;
+	margin: 2px;
+	height: 30px;
+	max-width: 30px;
+	width: 100%;
+	text-align: center;
 
 	p{
 		display: inline-block;
-		width: 100%;
+		width: 30px;
 		text-align: center;
 		font-size: 30px;
+		color: white;
+	}
+}
+
+.timer-colon {
+	max-width: 15px;
+
+	p {
+		width: 15px;
 	}
 }
 
@@ -130,6 +203,9 @@ a {
 	.counter p {
 		font-size: 100px;
 	}
+	.timer-settings {
+		padding: 0;
+	}
 }
 
 @media screen and (max-width: 400px){
@@ -144,6 +220,15 @@ a {
 @media screen and (max-width: 330px){
 	.counter p {
 		font-size: 60px;
+	}
+}
+
+@media screen and (max-width: 295px){
+	.title h2 {
+		font-size: 40px;
+	}
+	.timer-row:first-of-type p {
+		font-size: 24px;
 	}
 }
 

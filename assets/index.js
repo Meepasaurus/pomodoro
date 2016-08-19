@@ -125,9 +125,14 @@ var Timer = function(defaultSessionSeconds, defaultBreakSeconds){
 			this.updateClock();
 		},
 
+		setSession: function(data){
+			console.log(data);
+		},
+
 		init: function(){
 			sectionRemainingSeconds = totalSessionSeconds;
 			sectionTotalSeconds = totalSessionSeconds;
+			$('#session-seconds-ones').text(5);
 			this.updateClock();
 		}
 	};
@@ -142,9 +147,9 @@ $(document).ready(function(){
 		myTimer.startStop();
 	});
 
-	$('#plus').on('click', function(e){
+	$('.edit-session').on('click', function(e){
 		e.preventDefault();
-		//myTimer.setSeconds(true);
+		myTimer.setSession($(this).data('edit'));
 	});
 
 	$('#minus').on('click', function(e){

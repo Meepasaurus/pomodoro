@@ -5,6 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
 	<link rel="stylesheet" href="index.css"/>
 	<title>Pomodoro Timer</title>
 </head>
@@ -23,8 +24,76 @@
 			</a>
 		<div id="pulse" class="pulse-container"></div>
 		</section>
-		<a id="plus" class="btn" href="#"><p>&plus;</p></a>
-		<a id="minus" class="btn" href="#"><p>&minus;</p></a>
+		<section class="settings">
+			<section class="timer-settings">
+				<div class="timer-row">
+					<p>Session Length</p>
+				</div>
+				<div class="timer-row">
+					<a class="edit-session btn" href="#" data-edit="+600"><p><i class="fa fa-chevron-up" aria-hidden="true"></i></p>
+</a>
+					<a class="edit-session btn" href="#" data-edit="+60"><p><i class="fa fa-chevron-up" aria-hidden="true"></i></p>
+</a>
+					<div id class="btn timer-colon"></div>
+					<a class="edit-session btn" href="#" data-edit="+10"><p><i class="fa fa-chevron-up" aria-hidden="true"></i></p>
+</a>
+					<a class="edit-session btn" href="#" data-edit="+1"><p><i class="fa fa-chevron-up" aria-hidden="true"></i></p>
+</a>
+				</div>
+				<div class="timer-row">
+					<div class="timer-digit"><p id="session-minutes-tens">0</p></div>
+					<div class="timer-digit"><p id="session-minutes-ones">0</p></div>
+					<div class="timer-digit timer-colon"><p>:</p></div>
+					<div class="timer-digit"><p id="session-seconds-tens">0</p></div>
+					<div class="timer-digit"><p id="session-seconds-ones">0</p></div>
+				</div>
+				<div class = "timer-row">
+					<a id="plus" class="btn" href="#"><p><i class="fa fa-chevron-down" aria-hidden="true"></i></p>
+</a>
+					<a id="plus" class="btn" href="#"><p><i class="fa fa-chevron-down" aria-hidden="true"></i></p>
+</a>
+					<div id class="btn timer-colon"></div>
+					<a id="plus" class="btn" href="#"><p><i class="fa fa-chevron-down" aria-hidden="true"></i></p>
+</a>
+					<a id="plus" class="btn" href="#"><p><i class="fa fa-chevron-down" aria-hidden="true"></i></p>
+</a>
+				</div>
+			</section>
+			<section class="timer-settings">
+				<div class="timer-row">
+					<p>Break Length</p>
+				</div>
+				<div class="timer-row">
+					<a id="plus" class="btn" href="#"><p><i class="fa fa-chevron-up" aria-hidden="true"></i></p>
+</a>
+					<a id="plus" class="btn" href="#"><p><i class="fa fa-chevron-up" aria-hidden="true"></i></p>
+</a>
+					<div id class="btn timer-colon"></div>
+					<a id="plus" class="btn" href="#"><p><i class="fa fa-chevron-up" aria-hidden="true"></i></p>
+</a>
+					<a id="plus" class="btn" href="#"><p><i class="fa fa-chevron-up" aria-hidden="true"></i></p>
+</a>
+				</div>
+				<div class="timer-row">
+					<div class="timer-digit"><p>0</p></div>
+					<div class="timer-digit"><p>0</p></div>
+					<div class="timer-digit timer-colon"><p>:</p></div>
+					<div class="timer-digit"><p>0</p></div>
+					<div class="timer-digit"><p>0</p></div>
+				</div>
+				<div class="timer-row">
+					<a id="plus" class="btn" href="#"><p><i class="fa fa-chevron-down" aria-hidden="true"></i></p>
+</a>
+					<a id="plus" class="btn" href="#"><p><i class="fa fa-chevron-down" aria-hidden="true"></i></p>
+</a>
+					<div id class="btn timer-colon"></div>
+					<a id="plus" class="btn" href="#"><p><i class="fa fa-chevron-down" aria-hidden="true"></i></p>
+</a>
+					<a id="plus" class="btn" href="#"><p><i class="fa fa-chevron-down" aria-hidden="true"></i></p>
+</a>
+				</div>
+			</section>
+		</section>
 	</main>
 	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 	<script src="index.js"></script>
