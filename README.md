@@ -5,6 +5,17 @@ Pomodoro Clock [WIP]
 
    At certain scales, particularly in IE, there is a noticeable vertical line down the middle at 0 and 100%, which required two extra cases to simply draw a solid background-color and remove the gradient. A second, smaller circular div is placed on top to act as a mask and create the ring.
 
+TODO
+====
+
+- Add reset button.
+
+- Add sound options.
+
+- Fix sound not playing for extremely short section lengths.
+
+- Add instructions.
+
 Audio Credits
 -------------
 

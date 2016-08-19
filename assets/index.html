@@ -18,7 +18,7 @@
 			<a class="btn-clock" href="#">
 				<div id="slice" class="circle-background">
 					<div class="clock-face">
-						<div class="counter"><p>00:00</p></div>
+						<div class="counter"><p>25:00</p></div>
 					</div>
 				</div>
 			</a>
@@ -30,14 +30,14 @@
 					<p>Session Length</p>
 				</div>
 				<div class="timer-row">
-					<a class="edit-session btn" href="#" data-edit="+600"><p><i class="fa fa-chevron-up" aria-hidden="true"></i></p>
+					<a class="edit-timer btn" href="#" data-edit="+600" data-type="session"><p><i class="fa fa-chevron-up" aria-hidden="true"></i></p>
 </a>
-					<a class="edit-session btn" href="#" data-edit="+60"><p><i class="fa fa-chevron-up" aria-hidden="true"></i></p>
+					<a class="edit-timer btn" href="#" data-edit="+60" data-type="session"><p><i class="fa fa-chevron-up" aria-hidden="true"></i></p>
 </a>
 					<div id class="btn timer-colon"></div>
-					<a class="edit-session btn" href="#" data-edit="+10"><p><i class="fa fa-chevron-up" aria-hidden="true"></i></p>
+					<a class="edit-timer btn" href="#" data-edit="+10" data-type="session"><p><i class="fa fa-chevron-up" aria-hidden="true"></i></p>
 </a>
-					<a class="edit-session btn" href="#" data-edit="+1"><p><i class="fa fa-chevron-up" aria-hidden="true"></i></p>
+					<a class="edit-timer btn" href="#" data-edit="+1" data-type="session"><p><i class="fa fa-chevron-up" aria-hidden="true"></i></p>
 </a>
 				</div>
 				<div class="timer-row">
@@ -48,14 +48,14 @@
 					<div class="timer-digit"><p id="session-seconds-ones">0</p></div>
 				</div>
 				<div class = "timer-row">
-					<a id="plus" class="btn" href="#"><p><i class="fa fa-chevron-down" aria-hidden="true"></i></p>
+					<a class="edit-timer btn" href="#" data-edit="-600" data-type="session"><p><i class="fa fa-chevron-down" aria-hidden="true"></i></p>
 </a>
-					<a id="plus" class="btn" href="#"><p><i class="fa fa-chevron-down" aria-hidden="true"></i></p>
+					<a class="edit-timer btn" href="#" data-edit="-60" data-type="session"><p><i class="fa fa-chevron-down" aria-hidden="true"></i></p>
 </a>
 					<div id class="btn timer-colon"></div>
-					<a id="plus" class="btn" href="#"><p><i class="fa fa-chevron-down" aria-hidden="true"></i></p>
+					<a class="edit-timer btn" href="#" data-edit="-10" data-type="session"><p><i class="fa fa-chevron-down" aria-hidden="true"></i></p>
 </a>
-					<a id="plus" class="btn" href="#"><p><i class="fa fa-chevron-down" aria-hidden="true"></i></p>
+					<a class="edit-timer btn" href="#" data-edit="-1" data-type="session"><p><i class="fa fa-chevron-down" aria-hidden="true"></i></p>
 </a>
 				</div>
 			</section>
@@ -64,32 +64,32 @@
 					<p>Break Length</p>
 				</div>
 				<div class="timer-row">
-					<a id="plus" class="btn" href="#"><p><i class="fa fa-chevron-up" aria-hidden="true"></i></p>
+					<a class="edit-timer btn" href="#" data-edit="+600" data-type="break"><p><i class="fa fa-chevron-up" aria-hidden="true"></i></p>
 </a>
-					<a id="plus" class="btn" href="#"><p><i class="fa fa-chevron-up" aria-hidden="true"></i></p>
+					<a class="edit-timer btn" href="#" data-edit="+60" data-type="break"><p><i class="fa fa-chevron-up" aria-hidden="true"></i></p>
 </a>
 					<div id class="btn timer-colon"></div>
-					<a id="plus" class="btn" href="#"><p><i class="fa fa-chevron-up" aria-hidden="true"></i></p>
+					<a class="edit-timer btn" href="#" data-edit="+10" data-type="break"><p><i class="fa fa-chevron-up" aria-hidden="true"></i></p>
 </a>
-					<a id="plus" class="btn" href="#"><p><i class="fa fa-chevron-up" aria-hidden="true"></i></p>
+					<a class="edit-timer btn" href="#" data-edit="+1" data-type="break"><p><i class="fa fa-chevron-up" aria-hidden="true"></i></p>
 </a>
 				</div>
 				<div class="timer-row">
-					<div class="timer-digit"><p>0</p></div>
-					<div class="timer-digit"><p>0</p></div>
+					<div class="timer-digit"><p id="break-minutes-tens">0</p></div>
+					<div class="timer-digit"><p id="break-minutes-ones">0</p></div>
 					<div class="timer-digit timer-colon"><p>:</p></div>
-					<div class="timer-digit"><p>0</p></div>
-					<div class="timer-digit"><p>0</p></div>
+					<div class="timer-digit"><p id="break-seconds-tens">0</p></div>
+					<div class="timer-digit"><p id="break-seconds-ones">0</p></div>
 				</div>
-				<div class="timer-row">
-					<a id="plus" class="btn" href="#"><p><i class="fa fa-chevron-down" aria-hidden="true"></i></p>
+				<div class = "timer-row">
+					<a class="edit-timer btn" href="#" data-edit="-600" data-type="break"><p><i class="fa fa-chevron-down" aria-hidden="true"></i></p>
 </a>
-					<a id="plus" class="btn" href="#"><p><i class="fa fa-chevron-down" aria-hidden="true"></i></p>
+					<a class="edit-timer btn" href="#" data-edit="-60" data-type="break"><p><i class="fa fa-chevron-down" aria-hidden="true"></i></p>
 </a>
 					<div id class="btn timer-colon"></div>
-					<a id="plus" class="btn" href="#"><p><i class="fa fa-chevron-down" aria-hidden="true"></i></p>
+					<a class="edit-timer btn" href="#" data-edit="-10" data-type="break"><p><i class="fa fa-chevron-down" aria-hidden="true"></i></p>
 </a>
-					<a id="plus" class="btn" href="#"><p><i class="fa fa-chevron-down" aria-hidden="true"></i></p>
+					<a class="edit-timer btn" href="#" data-edit="-1" data-type="break"><p><i class="fa fa-chevron-down" aria-hidden="true"></i></p>
 </a>
 				</div>
 			</section>

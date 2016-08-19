@@ -119,6 +119,7 @@ a {
     text-align: center;
     font-size: 30px;
     color: #aaa;
+    outline: none;
     transition: 0.2s ease-in-out color; }
     .btn p:hover, .btn p:active, .btn p:focus {
       color: white; }
