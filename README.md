@@ -10,9 +10,7 @@ TODO
 
 - Add reset button.
 
-- Add sound options.
-
-- Fix sound not playing for extremely short section lengths.
+- Style radio buttons.
 
 - Add instructions.
 

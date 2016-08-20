@@ -5,14 +5,21 @@ var Timer = function(defaultSessionSeconds, defaultBreakSeconds){
 		counterDOM = $('.counter').find('p'),
 		titleDOM = $('#title'),
 		pulseDOM = $('#pulse'),
+		sessionMinTensDOM = $('#session-minutes-tens'),
+		sessionMinOnesDOM = $('#session-minutes-ones'),
+		sessionSecTensDOM = $('#session-seconds-tens'),
+		sessionSecOnesDOM = $('#session-seconds-ones'),
+		audioDOM = document.getElementById("notification"),
 		txtColor = 'white',
 		bgColor = '#263238',
 		timerType = 'session',
+		audio = '',
+		audioEnabled = 'true',
 		totalSessionSeconds = defaultSessionSeconds,
 		totalBreakSeconds = defaultBreakSeconds,
 		sectionTotalSeconds = 0,
 		sectionRemainingSeconds = 0,
-		isInit = false,
+		isInit = false, //allow update of main timer only if it's never been started once
 		interval = '',
 		isActive = false;
 
@@ -97,13 +104,13 @@ var Timer = function(defaultSessionSeconds, defaultBreakSeconds){
 				}, 1000);
 
 				if (timerType === 'session'){
-					document.getElementById("notification").play();
+					this.playAudio();
 					timerType = 'break';
 					sectionRemainingSeconds = totalBreakSeconds;
 					sectionTotalSeconds = totalBreakSeconds;
 					this.startStop();
 				} else {
-					document.getElementById("notification").play();
+					this.playAudio();
 					timerType = 'session';
 					sectionRemainingSeconds = totalSessionSeconds;
 					sectionTotalSeconds = totalSessionSeconds;
@@ -129,7 +136,37 @@ var Timer = function(defaultSessionSeconds, defaultBreakSeconds){
 	        }
 		},
 
+		playAudio: function(){
+			if (audioEnabled){
+				audioDOM.pause();
+				audioDOM.currentTime = 0;
+				audioDOM.play();
+			}
+		},
+
+		setAudio: function(sfx){
+			switch(sfx){
+				case 'off':
+					audioEnabled = false;
+					break;
+				case 'chime':
+					audioDOM.src = 'audio/chime.mp3';
+					audioEnabled = true;
+					break;
+				case 'bleep':
+					audioDOM.src = 'audio/bleep.mp3';
+					audioEnabled = true;
+					break;
+				case 'moo':
+					audioDOM.src = 'audio/moo.mp3';
+					audioEnabled = true;
+					break;
+			}
+		},
+
 		setSettingsTimer: function(data, type){
+			console.log(isInit);
+
 			data = data.toString();
 			
 			var operation = data.slice(0, 1),
@@ -145,7 +182,7 @@ var Timer = function(defaultSessionSeconds, defaultBreakSeconds){
 				tempTotalSeconds = totalBreakSeconds;
 			}
 
-			console.log(operation +':'+ digits);
+			//console.log(operation +':'+ digits);
 			if (operation === '+'){
 				switch(amount){
 					case 1:
@@ -188,15 +225,21 @@ var Timer = function(defaultSessionSeconds, defaultBreakSeconds){
 			}
 
 			if (!isInit){
-				this.init();
+				sectionRemainingSeconds = totalSessionSeconds;
+				sectionTotalSeconds = totalSessionSeconds;
+				if (sectionTotalSeconds === 0){
+					this.updateCounter();
+				} else {
+					this.updateClock();
+				}
 			}
 		},
 
 		setParsedSessionDigits: function(parsedDigits){
-			$('#session-minutes-tens').text(parsedDigits[0]);
-			$('#session-minutes-ones').text(parsedDigits[1]);
-			$('#session-seconds-tens').text(parsedDigits[2]);
-			$('#session-seconds-ones').text(parsedDigits[3]);
+			sessionMinTensDOM.text(parsedDigits[0]);
+			sessionMinOnesDOM.text(parsedDigits[1]);
+			sessionSecTensDOM.text(parsedDigits[2]);
+			sessionSecOnesDOM.text(parsedDigits[3]);
 		},
 
 		setParsedBreakDigits: function(parsedDigits){
@@ -222,6 +265,9 @@ var Timer = function(defaultSessionSeconds, defaultBreakSeconds){
 		},
 
 		init: function(){
+			//audio
+			this.setAudio($('input[name=sfx]:checked', '#sfx').val());
+
 			//set settings counters
 			this.setParsedSessionDigits(this.parseFourDigits(totalSessionSeconds));
 
@@ -247,6 +293,10 @@ $(document).ready(function(){
 	$('.edit-timer').on('click', function(e){
 		e.preventDefault();
 		myTimer.setSettingsTimer($(this).data('edit'), $(this).data('type'));
+	});
+
+	$('#sfx input').on('change', function() {
+   		myTimer.setAudio($('input[name=sfx]:checked', '#sfx').val());
 	});
 
 });

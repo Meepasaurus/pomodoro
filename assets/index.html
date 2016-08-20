@@ -10,7 +10,6 @@
 	<title>Pomodoro Timer</title>
 </head>
 <body>
-	<audio id="notification" src="audio/chime.mp3" preload="auto"></audio>
 	<main class="wrapper">
 		<div class="title"><h2 id="title">Session</h2></div>
 		<section class="clock-container">
@@ -93,6 +92,28 @@
 </a>
 				</div>
 			</section>
+		</section>
+		<section class="audio-settings">
+			<audio id="notification" src="audio/chime.mp3" preload="auto"></audio>
+			<div id="sfx-title"><p>Notification</p></div>
+			<form id="sfx">
+				<label class="control control-radio">Off
+					<input type="radio" name="sfx" value="off">
+					<div class="control-indicator"></div>
+				</label>
+				<label class="control control-radio">Chime
+					<input type="radio" name="sfx" value="chime" checked>
+					<div class="control-indicator"></div>
+				</label>
+				<label class="control control-radio">Bleep
+					<input type="radio" name="sfx" value="bleep">
+					<div class="control-indicator"></div>
+				</label>
+				<label class="control control-radio">Moo
+					<input type="radio" name="sfx" value="moo">
+					<div class="control-indicator"></div>
+				</label>
+			</form>
 		</section>
 	</main>
 	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
