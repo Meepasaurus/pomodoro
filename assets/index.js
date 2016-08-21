@@ -96,7 +96,8 @@ var Timer = function(defaultSessionSeconds, defaultBreakSeconds){
 			
 			if (sectionRemainingSeconds === 0){
 				this.startStop();
-				console.log(timerType + ' time\'s up.');
+				//console.log(timerType + ' time\'s up.');
+				
 				//animation
 				pulseDOM.addClass('pulse');
 				window.setTimeout(function(){
@@ -105,20 +106,36 @@ var Timer = function(defaultSessionSeconds, defaultBreakSeconds){
 
 				if (timerType === 'session'){
 					this.playAudio();
-					timerType = 'break';
-					sectionRemainingSeconds = totalBreakSeconds;
-					sectionTotalSeconds = totalBreakSeconds;
+					
+					if (totalBreakSeconds === 0){
+						//skip break
+						sectionRemainingSeconds = totalSessionSeconds;
+						sectionTotalSeconds = totalSessionSeconds;	
+					} else {
+						timerType = 'break';
+						sectionRemainingSeconds = totalBreakSeconds;
+						sectionTotalSeconds = totalBreakSeconds;
+					}
+					
 					this.startStop();
 				} else {
 					this.playAudio();
-					timerType = 'session';
-					sectionRemainingSeconds = totalSessionSeconds;
-					sectionTotalSeconds = totalSessionSeconds;
+					
+					if (totalSessionSeconds === 0){
+						//skip session
+						sectionRemainingSeconds = totalBreakSeconds;
+						sectionTotalSeconds = totalBreakSeconds;	
+					} else {
+						timerType = 'session';
+						sectionRemainingSeconds = totalSessionSeconds;
+						sectionTotalSeconds = totalSessionSeconds;	
+					}
+					
 					this.startStop();
 				}
 			} else {
 				sectionRemainingSeconds--;
-				console.log(sectionRemainingSeconds+1 + ' seconds remaining.');
+				//console.log(sectionRemainingSeconds+1 + ' seconds remaining.');
 			}
 		},
 
@@ -130,9 +147,12 @@ var Timer = function(defaultSessionSeconds, defaultBreakSeconds){
 				window.clearInterval(interval);
 				isActive = false;
 			} else {
-				//start
-	          	interval = window.setInterval(this.updateClock.bind(this), 1000);
-	          	isActive = true;
+				//don't start if both sections are set to 0 length
+				if (!(totalSessionSeconds === 0 && totalBreakSeconds === 0)){
+					//start
+		          	interval = window.setInterval(this.updateClock.bind(this), 1000);
+		          	isActive = true;
+	          	}
 	        }
 		},
 
@@ -162,10 +182,12 @@ var Timer = function(defaultSessionSeconds, defaultBreakSeconds){
 					audioEnabled = true;
 					break;
 			}
+			//save settings
+			localStorage.setItem('audio', sfx);
 		},
 
 		setSettingsTimer: function(data, type){
-			console.log(isInit);
+			//console.log(isInit);
 
 			data = data.toString();
 			
@@ -219,9 +241,11 @@ var Timer = function(defaultSessionSeconds, defaultBreakSeconds){
 			if (type === 'session'){
 				totalSessionSeconds = tempTotalSeconds;
 				this.setParsedSessionDigits(this.parseFourDigits(totalSessionSeconds));
+				localStorage.setItem('session', totalSessionSeconds.toString());
 			} else {
 				totalBreakSeconds = tempTotalSeconds;
 				this.setParsedBreakDigits(this.parseFourDigits(totalBreakSeconds));
+				localStorage.setItem('break', totalBreakSeconds.toString());
 			}
 
 			if (!isInit){
@@ -264,6 +288,25 @@ var Timer = function(defaultSessionSeconds, defaultBreakSeconds){
           	return ([minTens, minOnes, secTens, secOnes]);
 		},
 
+		reset: function(){
+			if (isActive){
+				this.startStop();
+			}
+
+			if (totalSessionSeconds === 0){
+				sectionRemainingSeconds = totalBreakSeconds;
+				sectionTotalSeconds = totalBreakSeconds;
+				timerType = 'break';
+			} else {
+				sectionRemainingSeconds = totalSessionSeconds;
+				sectionTotalSeconds = totalSessionSeconds;
+				timerType = 'session';
+			}
+
+			isInit = false;
+			this.updateClock();
+		},
+
 		init: function(){
 			//audio
 			this.setAudio($('input[name=sfx]:checked', '#sfx').val());
@@ -282,12 +325,37 @@ var Timer = function(defaultSessionSeconds, defaultBreakSeconds){
 };
 
 $(document).ready(function(){
-	var myTimer = new Timer(3, 5); //max 5999 seconds
+	//load/set localStorage
+	var storedAudio = localStorage.getItem('audio'),
+		storedSession = $.parseJSON(localStorage.getItem('session')),
+		storedBreak = $.parseJSON(localStorage.getItem('break'));
+
+	if (storedAudio !== null){
+    	$('#' + storedAudio).click();
+    	$(':focus').blur();
+	} else {
+		localStorage.setItem('audio', 'chime');
+	}
+
+	if (storedSession === null){
+		localStorage.setItem('session', '1500');
+		storedSession = 1500;
+	}
+
+	if (storedBreak === null){
+		localStorage.setItem('break', '300');
+		storedBreak = 300;
+	}
+
+	var myTimer = new Timer(storedSession, storedBreak); //max 5999 seconds
 	myTimer.init();
 
 	$('.btn-clock').on('click', function(e){
-		e.preventDefault();
 		myTimer.startStop();
+	});
+
+	$('.reset').on('click', function(e){
+		myTimer.reset();
 	});
 
 	$('.edit-timer').on('click', function(e){

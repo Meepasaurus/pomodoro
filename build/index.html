@@ -14,15 +14,18 @@
 		<div class="title"><h2 id="title">Session</h2></div>
 		<section class="clock-container">
 			<div class="one-by-one-aspect-ratio"></div>
-			<a class="btn-clock" href="#">
+			<div class="btn-clock">
 				<div id="slice" class="circle-background">
 					<div class="clock-face">
 						<div class="counter"><p>25:00</p></div>
 					</div>
 				</div>
-			</a>
+			</div>
 		<div id="pulse" class="pulse-container"></div>
 		</section>
+		<div class="reset-container">
+			<div class="reset">Reset</div>
+		</div>
 		<section class="settings">
 			<section class="timer-settings">
 				<div class="timer-row">
@@ -97,23 +100,27 @@
 			<audio id="notification" src="audio/chime.mp3" preload="auto"></audio>
 			<div id="sfx-title"><p>Notification</p></div>
 			<form id="sfx">
-				<label class="control control-radio">Off
+				<label id="off" class="control control-radio">Off
 					<input type="radio" name="sfx" value="off">
 					<div class="control-indicator"></div>
 				</label>
-				<label class="control control-radio">Chime
+				<label id="chime" class="control control-radio">Chime
 					<input type="radio" name="sfx" value="chime" checked>
 					<div class="control-indicator"></div>
 				</label>
-				<label class="control control-radio">Bleep
+				<label id="bleep" class="control control-radio">Bleep
 					<input type="radio" name="sfx" value="bleep">
 					<div class="control-indicator"></div>
 				</label>
-				<label class="control control-radio">Moo
+				<label id="moo" class="control control-radio">Moo
 					<input type="radio" name="sfx" value="moo">
 					<div class="control-indicator"></div>
 				</label>
 			</form>
+		</section>
+		<section class="instructions">
+			<p>Click timer to start/stop.<br>
+			Session and Break Length settings will be applied on their next loop, or you can click Reset to apply them immediately.</p>
 		</section>
 	</main>
 	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
